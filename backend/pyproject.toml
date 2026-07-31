@@ -15,7 +15,8 @@ dependencies = [
     "pydantic (>=2.13.4,<3.0.0)",
     "pydantic-settings (>=2.14.2,<3.0.0)",
     "alembic (>=1.18.5,<2.0.0)",
-    "greenlet (>=3.5.4,<4.0.0)"
+    "greenlet (>=3.5.4,<4.0.0)",
+    "datetime (>=6.0,<7.0)"
 ]
 
 [tool.poetry]
