@@ -7,8 +7,8 @@ from sqlalchemy import Select, select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
-from shared.schemas.filters import BaseFilter
-from shared.schemas.pagination import Page, PaginationParams
+from backend.schemas.filters import BaseFilter
+from backend.schemas.pagination import Page, PaginationParams
 
 T = TypeVar("T", bound=DeclarativeBase)
 
