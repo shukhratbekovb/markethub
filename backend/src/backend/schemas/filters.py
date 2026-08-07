@@ -4,14 +4,16 @@ from abc import ABC, abstractmethod
 
 from sqlalchemy import Select
 
+from backend.models.mixins import LanguageEnum
+
 
 class BaseFilter(ABC):
     """Encapsulates filtering and sorting on top of a repository's `base_query`."""
 
     @abstractmethod
     def filter(
-        self,
-        stmt: Select,
+            self,
+            stmt: Select,
     ) -> Select:
         """Apply `WHERE` conditions to `stmt`.
 
@@ -25,8 +27,8 @@ class BaseFilter(ABC):
 
     @abstractmethod
     def sort(
-        self,
-        stmt: Select,
+            self,
+            stmt: Select
     ) -> Select:
         """Apply `ORDER BY` to `stmt`.
 

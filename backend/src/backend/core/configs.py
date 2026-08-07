@@ -2,6 +2,8 @@ from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from backend.models.mixins import LanguageEnum
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 class Settings(BaseSettings):
@@ -17,6 +19,8 @@ class Settings(BaseSettings):
     jwt_algorithm: str
     jwt_access_token_expire_minutes: int
     jwt_refresh_token_expire_days: int
+
+    default_language: LanguageEnum
 
 settings = Settings()
 

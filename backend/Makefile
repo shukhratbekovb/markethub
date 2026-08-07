@@ -1,5 +1,5 @@
 dev:
-	poetry run uvicorn src.main:app --reload
+	poetry run uvicorn src.backend.main:app --reload
 upgrade:
 	poetry run alembic upgrade head
 downgrade:

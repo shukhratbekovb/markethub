@@ -30,3 +30,4 @@ class CategoryRepository(
         stmt = self.base_query.where(self.model.id == slug)
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
+
