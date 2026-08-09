@@ -1,7 +1,7 @@
 import enum
 
 from sqlalchemy import String, Enum
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.models import Base
 from backend.models.mixins import TimeStampMixin
@@ -39,3 +39,6 @@ class User(TimeStampMixin, Base):
         default=True
     )
 
+    shops: Mapped[list["Shop"]] = relationship(
+        back_populates="owner"
+    )
