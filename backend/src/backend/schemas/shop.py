@@ -17,6 +17,7 @@ class ShopBrief(BaseModel):
     name: str
     is_active: bool
     owner_id: UUID
+    logo_url: str | None
 
 class ShopResponse(TimeActionSchemaMixin, ShopBrief):
     pass

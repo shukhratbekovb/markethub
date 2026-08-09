@@ -1,3 +1,5 @@
+from sqlalchemy import select
+
 from backend.models import Shop
 from backend.repository.base import BaseRepository
 from backend.repository.mixins import (
@@ -19,4 +21,5 @@ class ShopRepository(
     PaginatedListRepositoryMixin[Shop],
     BaseRepository
 ):
-    pass
+    model = Shop
+    base_query = select(Shop)

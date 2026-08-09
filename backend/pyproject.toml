@@ -16,7 +16,10 @@ dependencies = [
     "pydantic-settings (>=2.14.2,<3.0.0)",
     "alembic (>=1.18.5,<2.0.0)",
     "greenlet (>=3.5.4,<4.0.0)",
-    "datetime (>=6.0,<7.0)"
+    "datetime (>=6.0,<7.0)",
+    "python-multipart (>=0.0.32,<0.0.33)",
+    "argon2-cffi (>=25.1.0,<26.0.0)",
+    "passlib (>=1.7.4,<2.0.0)"
 ]
 
 [tool.poetry]

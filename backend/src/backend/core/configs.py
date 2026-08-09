@@ -2,7 +2,7 @@ from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from backend.models.mixins import LanguageEnum
+from backend.core.enums import LanguageEnum
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     jwt_refresh_token_expire_days: int
 
     default_language: LanguageEnum
+
+    upload_root: str = "static"
+    max_image_size_mb: int = 5
 
 settings = Settings()
 

@@ -120,7 +120,7 @@ class AttributeValue(Base):
     attribute: Mapped["Attribute"] = relationship(
         back_populates="values"
     )
-    translations: Mapped[list["AttributeTranslation"]] = relationship(
+    translations: Mapped[list["AttributeValueTranslation"]] = relationship(
         back_populates="attribute_value"
     )
     variations: Mapped[list["ProductVariation"]] = relationship(

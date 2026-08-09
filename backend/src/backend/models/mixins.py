@@ -1,4 +1,3 @@
-import enum
 from datetime import datetime
 from uuid import UUID, uuid4
 
@@ -6,11 +5,7 @@ from sqlalchemy import func, String, DateTime, Enum
 
 from sqlalchemy.orm import Mapped, mapped_column
 
-
-class LanguageEnum(str, enum.Enum):
-    ENGLISH = 'en'
-    RUSSIAN = 'ru'
-    UZBEK = 'uz'
+from backend.core.enums import LanguageEnum
 
 
 class IdentityMixin:

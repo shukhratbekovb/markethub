@@ -1,8 +1,9 @@
 from uuid import UUID
 
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from backend.core.file_storage import save_upload, delete_file
 from backend.core.i18n import resolve_translation
 from backend.models import Category, CategoryTranslation
 from backend.models.mixins import LanguageEnum
@@ -141,3 +142,26 @@ class CategoryService:
             )
         return response
 
+    async def upload_category_logo(
+            self,
+            category: Category,
+            file: UploadFile
+    ):
+        old_logo = category.logo_path
+        category.logo_path = await save_upload("categories", category.id, file)
+        await self.category_repo.update(category)
+
+        if old_logo:
+            delete_file(old_logo)
+
+        await self.session.commit()
+
+    async def delete_category_logo(
+            self,
+            category: Category
+    ):
+        if category.logo_path:
+            delete_file(category.logo_path)
+            category.logo_path = None
+            await self.category_repo.update(category)
+            await self.session.commit()
