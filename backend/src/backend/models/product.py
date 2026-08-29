@@ -1,6 +1,8 @@
+from decimal import Decimal
 from uuid import UUID
 
 from sqlalchemy import ForeignKey, String, Numeric, CheckConstraint, Table, Column
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.models import Base
@@ -31,11 +33,22 @@ class Product(TimeStampMixin, Base):
         back_populates="product"
     )
     variations: Mapped[list["ProductVariation"]] = relationship(
-        back_populates="product"
+        back_populates="product",
+        lazy="selectin"
     )
     shop: Mapped["Shop"] = relationship(
         back_populates="products"
     )
+
+    @hybrid_property
+    def price_from(self) -> Decimal:
+        min_price = min(v.price for v in self.variations)
+        return Decimal(min_price)
+
+    @hybrid_property
+    def price_to(self) -> Decimal:
+        max_price = max(v.price for v in self.variations)
+        return Decimal(max_price)
 
 
 class ProductTranslation(LanguageMixin, Base):

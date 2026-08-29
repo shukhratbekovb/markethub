@@ -1,5 +1,7 @@
 from backend.models.base import Base
+from backend.models.cart import Cart, CartItem
 from backend.models.category import Category, CategoryTranslation
+from backend.models.order import OrderItem, Order
 from backend.models.product import (
     Product,
     ProductTranslation,
@@ -12,8 +14,6 @@ from backend.models.product import (
 )
 from backend.models.shop import Shop
 from backend.models.user import User
-
-
 
 __all__ = [
     "Base",
@@ -28,5 +28,9 @@ __all__ = [
     "AttributeValue",
     "AttributeTranslation",
     "AttributeValueTranslation",
-    "variant_attribute_values"
+    "variant_attribute_values",
+    "Cart",
+    "CartItem",
+    "Order",
+    "OrderItem",
 ]

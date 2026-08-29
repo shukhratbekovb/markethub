@@ -7,6 +7,7 @@ from sqlalchemy import Select, select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
+from backend.core.enums import LanguageEnum
 from backend.schemas.filters import BaseFilter
 from backend.schemas.pagination import Page, PaginationParams
 
@@ -103,8 +104,8 @@ class ListRepositoryMixin(RepositoryMixin[T]):
     base_query: Select
 
     async def list_all(
-        self,
-        filters: BaseFilter | None = None,
+            self,
+            filters: BaseFilter | None = None,
     ) -> list[T]:
         """Return every row matching `filters`, with no pagination.
 
@@ -130,9 +131,10 @@ class PaginatedListRepositoryMixin(RepositoryMixin[T]):
     base_query: Select
 
     async def list_paginated(
-        self,
-        pagination: PaginationParams,
-        filters: BaseFilter | None = None,
+            self,
+            pagination: PaginationParams,
+            filters: BaseFilter | None = None,
+            lang: LanguageEnum = LanguageEnum.RUSSIAN,
     ) -> Page[T]:
         """Return one page of rows matching `filters`.
 

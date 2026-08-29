@@ -4,8 +4,6 @@ from abc import ABC, abstractmethod
 
 from sqlalchemy import Select
 
-from backend.models.mixins import LanguageEnum
-
 
 class BaseFilter(ABC):
     """Encapsulates filtering and sorting on top of a repository's `base_query`."""
