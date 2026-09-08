@@ -31,3 +31,7 @@ class CartItem(TimeStampMixin, Base):
         back_populates="items",
     )
 
+    variant: Mapped["ProductVariation"] = relationship(
+        backref="items",
+    )
+
