@@ -11,6 +11,8 @@ class UserRole(str, enum.Enum):
     SELLER = 'seller'
     ADMIN = 'admin'
 
+
+
 class User(TimeStampMixin, Base):
     __tablename__ = 'users'
 
