@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from backend.api.v1.category import router as category_router
 from backend.api.v1.shop import router as shop_router
 from backend.api.v1.product import router as product_router
+from backend.api.v1.auth import router as auth_router
 
 v1_router = APIRouter(
     prefix="/api/v1",
@@ -16,4 +17,7 @@ v1_router.include_router(
 )
 v1_router.include_router(
     product_router
+)
+v1_router.include_router(
+    auth_router
 )
