@@ -8,6 +8,7 @@ from backend.core.security import decode_token
 from backend.dependencies.database import SessionDep
 from backend.dependencies.shop import ShopRepoDep
 from backend.models import User
+from backend.models.user import UserRole
 from backend.repository.user import UserRepository
 from backend.services.auth import AuthService
 
@@ -69,3 +70,21 @@ CurrentUserDep = Annotated[
     User,
     Depends(get_current_user)
 ]
+
+
+def require_role(*roles: UserRole):
+    async def role_checker(user: CurrentUserDep) -> User:
+        if user.role not in roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Not enough permissions",
+            )
+        return user
+
+    return role_checker
+
+
+CustomerDep = Annotated[User, Depends(require_role(UserRole.CUSTOMER))]
+SellerDep = Annotated[User, Depends(require_role(UserRole.SELLER))]
+AdminDep = Annotated[User, Depends(require_role(UserRole.ADMIN))]
+StaffDep = Annotated[User, Depends(require_role(UserRole.ADMIN, UserRole.SELLER))]

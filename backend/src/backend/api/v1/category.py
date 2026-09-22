@@ -2,6 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile, File
 
+from backend.dependencies.auth import AdminDep
 from backend.dependencies.category import CategoryServiceDep, CurrentCategoryDep
 from backend.dependencies.language import LanguageDep
 from backend.schemas.category import CategoryRequest, CategoryFilter
@@ -17,7 +18,8 @@ router = APIRouter(
 )
 async def create_category(
         service: CategoryServiceDep,
-        body: CategoryRequest
+        body: CategoryRequest,
+        admin: AdminDep
 ):
     category = await service.create_category(body)
     return category

@@ -3,6 +3,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile, File
 
+from backend.dependencies.ownership import get_managed_shop
 from backend.dependencies.shop import ShopServiceDep, CurrentShopDep
 from backend.schemas.pagination import PaginationParams
 from backend.schemas.shop import ShopRequest, ShopResponse
@@ -74,6 +75,7 @@ async def get_shop(
 
 @router.put(
     "/{shop_id}",
+    dependencies=[Depends(get_managed_shop)]
 )
 async def update_shop(
         shop_id: UUID,

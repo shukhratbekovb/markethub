@@ -13,6 +13,7 @@ from backend.models.order import OrderStatus
 from backend.repository.cart import CartRepository, CartItemRepository
 from backend.repository.order import OrderRepository
 from backend.repository.product import ProductVariationRepository
+from backend.schemas.order import OrderFilter
 
 
 class OrderService:
@@ -88,3 +89,39 @@ class OrderService:
             if attr_t and value_t:
                 parts.append(f"{attr_t.name}: {value_t.name}")
         return ", ".join(parts)
+
+    async def list_customer_orders(
+            self,
+            user_id: UUID,
+            filters: OrderFilter
+    ):
+        orders = await self.order_repo.list_customer_orders(
+            user_id=user_id,
+            filters=filters,
+        )
+        return orders
+
+    async def get_customer_order(
+            self,
+            user_id: UUID,
+            order_id: UUID
+    ):
+        order = await self.order_repo.get_customer_order(
+            user_id=user_id,
+            order_id=order_id
+        )
+        if order is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Order not found"
+            )
+        return order
+
+    # Stripe
+    async def list_seller_orders(
+            self,
+            user_id: UUID,
+            filters: OrderFilter
+    ):
+        pass
+

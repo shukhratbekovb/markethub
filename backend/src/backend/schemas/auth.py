@@ -22,7 +22,7 @@ class RegisterUser(BaseModel):
     last_name: str = Field(max_length=255)
     email: EmailStr
     password: str
-    phone: str | None
+    phone: str | None = None
 
     @field_validator('password')
     @classmethod
