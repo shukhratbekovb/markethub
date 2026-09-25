@@ -53,6 +53,7 @@ async def get_all_categories(
     "/{category_id}/logo"
 )
 async def upload_category_logo(
+        admin : AdminDep,
         category_id: UUID,
         category: CurrentCategoryDep,
         service: CategoryServiceDep,
@@ -65,6 +66,7 @@ async def upload_category_logo(
     "/{category_id}/logo"
 )
 async def delete_category_logo(
+        admin: AdminDep,
         category_id: UUID,
         category: CurrentCategoryDep,
         service: CategoryServiceDep,
@@ -88,6 +90,7 @@ async def get_category(
     "/{category_id}"
 )
 async def update_category(
+        admin: AdminDep,
         service: CategoryServiceDep,
         category_id: UUID,
         body: CategoryRequest,
@@ -100,6 +103,7 @@ async def update_category(
     "/{category_id}"
 )
 async def delete_category(
+        admin: AdminDep,
         service: CategoryServiceDep,
         category_id: UUID,
         category: CurrentCategoryDep

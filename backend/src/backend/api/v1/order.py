@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from backend.dependencies.auth import CustomerDep
 from backend.schemas.order import OrderBrief, OrderDetail
 
 router = APIRouter(
@@ -11,7 +12,9 @@ router = APIRouter(
 @router.post(
     ""
 )
-async def create_order():
+async def create_order(
+        customer: CustomerDep
+):
     pass
 
 
@@ -19,7 +22,9 @@ async def create_order():
     '',
     response_model=list[OrderBrief]
 )
-async def list_my_orders():
+async def list_my_orders(
+        customer: CustomerDep
+):
     pass
 
 
@@ -27,5 +32,7 @@ async def list_my_orders():
     "/{order_id}",
     response_model=OrderDetail
 )
-async def get_my_order():
+async def get_my_order(
+        customer: CustomerDep
+):
     pass

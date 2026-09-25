@@ -1,8 +1,8 @@
-import uuid
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, UploadFile, File
 
+from backend.dependencies.auth import SellerDep
 from backend.dependencies.ownership import get_managed_shop
 from backend.dependencies.shop import ShopServiceDep, CurrentShopDep
 from backend.schemas.pagination import PaginationParams
@@ -20,6 +20,7 @@ OWNER_ID = UUID("143d2f9c-ff76-4bd0-b5d4-fbaa660f239d")
     ""
 )
 async def create_shop(
+        seller: SellerDep,
         body: ShopRequest,
         service: ShopServiceDep
 ):
@@ -40,6 +41,7 @@ async def get_shops(
 
 @router.post(
     "/{shop_id}/logo",
+    dependencies=[Depends(get_managed_shop)]
 )
 async def upload_shop_logo(
         shop_id: UUID,
@@ -52,6 +54,7 @@ async def upload_shop_logo(
 
 @router.delete(
     "/{shop_id}/logo",
+    dependencies=[Depends(get_managed_shop)]
 )
 async def delete_shop_logo(
         shop_id: UUID,
@@ -88,6 +91,7 @@ async def update_shop(
 
 @router.delete(
     "/{shop_id}",
+    dependencies=[Depends(get_managed_shop)]
 )
 async def delete_shop(
         shop_id: UUID,

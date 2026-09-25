@@ -3,6 +3,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 from starlette import status
 
+from backend.dependencies.auth import StaffDep
 from backend.dependencies.language import LanguageDep
 from backend.dependencies.product import ProductServiceDep, CurrentProductDep, CurrentProductVariantDep
 from backend.schemas.pagination import Page, PaginationParams
@@ -12,6 +13,7 @@ from backend.schemas.product import ProductCreateResponse, ProductCreate, Produc
 router = APIRouter(
     prefix="/products",
     tags=["product"],
+    dependencies=StaffDep
 )
 
 
@@ -19,6 +21,7 @@ router = APIRouter(
     "/{product_id}/variants/{variant_id}/adjust-stock",
 )
 async def adjust_stock(
+        staff: StaffDep,
         product_id: UUID,
         variant_id: UUID,
         variant: CurrentProductVariantDep,
@@ -27,10 +30,12 @@ async def adjust_stock(
 ):
     await service.adjust_stock(variant, body)
 
+
 @router.patch(
     "/{product_id}/variants/{variant_id}/set-stock",
 )
 async def set_stock(
+        staff: StaffDep,
         product_id: UUID,
         variant_id: UUID,
         variant: CurrentProductVariantDep,
@@ -40,11 +45,13 @@ async def set_stock(
 ):
     await service.set_stock(variant, body)
 
+
 @router.post(
     "/{product_id}/variants",
     status_code=status.HTTP_201_CREATED,
 )
 async def create_product_variant(
+        staff: StaffDep,
         product_id: UUID,
         product: CurrentProductDep,
         service: ProductServiceDep,
@@ -57,6 +64,7 @@ async def create_product_variant(
     "/{product_id}/variants",
 )
 async def list_product_variants(
+        staff: StaffDep,
         product_id: UUID,
 ):
     pass
@@ -80,6 +88,7 @@ async def get_product(
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def update_product(
+        staff: StaffDep,
         product_id: UUID,
         product: CurrentProductDep,
         service: ProductServiceDep,
@@ -93,6 +102,7 @@ async def update_product(
     status_code=status.HTTP_204_NO_CONTENT
 )
 async def delete_product(
+        staff: StaffDep,
         product_id: UUID,
         product: CurrentProductDep,
         service: ProductServiceDep
@@ -124,6 +134,7 @@ async def get_products(
     response_model=ProductCreateResponse
 )
 async def create_product(
+        staff: StaffDep,
         body: ProductCreate,
         service: ProductServiceDep
 ):

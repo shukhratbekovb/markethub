@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from sqlalchemy import UUID
 
+from backend.dependencies.auth import CustomerDep
 from backend.dependencies.cart import CartServiceDep
 from backend.schemas.cart import CartItemAddRequest, CartItemUpdateRequest
 
@@ -14,7 +15,9 @@ OWNER_ID = UUID("143d2f9c-ff76-4bd0-b5d4-fbaa660f239d")
 
 @router.get("/")
 async def get_cart(
-        service: CartServiceDep
+        customer: CustomerDep,
+        service: CartServiceDep,
+
 ):
     cart = await service.get_cart(OWNER_ID)
     return cart
@@ -22,8 +25,10 @@ async def get_cart(
 
 @router.post("/items")
 async def add_item(
+        customer: CustomerDep,
         body: CartItemAddRequest,
         service: CartServiceDep,
+
 ):
     await service.add_item(
         user_id=OWNER_ID,
@@ -34,6 +39,7 @@ async def add_item(
 
 @router.patch("/items/{variant_id}")
 async def update_item(
+        customer: CustomerDep,
         variant_id: UUID,
         body: CartItemUpdateRequest,
         service: CartServiceDep,
@@ -47,6 +53,7 @@ async def update_item(
 
 @router.delete("/items/{variant_id}")
 async def remove_item(
+        customer: CustomerDep,
         variant_id: UUID,
         service: CartServiceDep,
 ):
@@ -58,6 +65,7 @@ async def remove_item(
 
 @router.delete("/")
 async def clear_cart(
+        customer: CustomerDep,
         service: CartServiceDep,
 ):
     await service.clear_cart(
